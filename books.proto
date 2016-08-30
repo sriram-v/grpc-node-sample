@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package books;
+
+service BookService{
+    // List all books
+    rpc List (Empty) returns (BookList) {}
+    // Insert a Book
+    rpc Insert (Book) returns (Empty) {}
+    // Get a book provided an id
+    rpc Get (BookIDRequest) returns (Book) {}
+    //Delete a book provided an id
+    rpc Delete (BookIDRequest) returns (Empty) {}
+    // Modify the details of a book provided an ID
+    rpc Update (Book) returns (Empty) {}
+
+    //Stream added books - Interesting to see streaming semantics out of the box
+    rpc Watch (Empty) returns (stream Book) {}
+
+}
+
+message Empty {}
+
+message Book {
+    int32 id = 1;
+    string title = 2;
+    string author = 3;
+}
+
+message BookIDRequest {
+    int32 id = 1;
+}
+
+message BookList {
+    repeated Book books = 1;
+}
